@@ -9,8 +9,7 @@
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact",
-    "json"
+    "typescriptreact"
   ],
   "prettier.tabWidth": 2,
   "prettier.useTabs": false,
