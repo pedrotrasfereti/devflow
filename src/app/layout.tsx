@@ -6,13 +6,13 @@ import "./globals.css";
 import ThemeProvider from "@/context/Theme";
 
 const inter = localFont({
-  src: "./fonts/InterVF.woff",
+  src: "./fonts/InterVF.ttf",
   variable: "--font-inter",
   weight: "100 200 300 400 500 700 800 900",
 });
 
 const spaceGrotesk = localFont({
-  src: "./fonts/SpaceGroteskVF.woff",
+  src: "./fonts/SpaceGroteskVF.ttf",
   variable: "--font-space-grotesk",
   weight: "300 400 500 700",
 });
