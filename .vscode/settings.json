@@ -39,5 +39,6 @@
     "**/components.json": true,
     "**/postcss.config.mjs": true,
     "**/tsconfig.json": true
-  }
+  },
+  "editor.wordWrap": "on"
 }
