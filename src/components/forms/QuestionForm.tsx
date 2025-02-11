@@ -1,7 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import { type MDXEditorMethods } from "@mdxeditor/editor";
+import dynamic from "next/dynamic";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 
 import {
@@ -18,7 +20,12 @@ import { AskQuestionSchema } from "@/lib/validations";
 
 import { Button } from "../ui/button";
 
+// Dynamically render component on client side
+const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
+
 const QuestionForm = () => {
+  const editorRef = useRef<MDXEditorMethods>(null);
+
   const form = useForm({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
@@ -45,16 +52,19 @@ const QuestionForm = () => {
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Question Title <span className="text-primary-500">*</span>
               </FormLabel>
+
               <FormControl>
                 <Input
                   className="paragraph-regular background-light700_dark300 light-border-2 text-dark300_light700 no-focus min-h-[56px] border"
                   {...field}
                 />
               </FormControl>
+
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Be specific and imagine you&apos;re asking a question to another
                 person.
               </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -64,17 +74,26 @@ const QuestionForm = () => {
         <FormField
           control={form.control}
           name="content"
-          render={() => (
+          render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Detailed explanation of your problem{" "}
                 <span className="text-primary-500">*</span>
               </FormLabel>
-              <FormControl>{/* EDITOR */}</FormControl>
+
+              <FormControl>
+                <Editor
+                  value={field.value}
+                  editorRef={editorRef}
+                  fieldChange={field.onChange}
+                />
+              </FormControl>
+
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Introduce the problem and expand on what you&apos;ve put in the
                 title.
               </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -89,15 +108,20 @@ const QuestionForm = () => {
               <FormLabel className="paragraph-semibold text-dark400_light800 gap-3">
                 Tags <span className="text-primary-500">*</span>
               </FormLabel>
+
               <FormControl>
-                <Input
-                  className="paragraph-regular background-light700_dark300 light-border-2 text-dark300_light700 no-focus min-h-[56px] border"
-                  placeholder="Add Tags..."
-                  {...field}
-                />
-                Tags
+                <div>
+                  <Input
+                    className="paragraph-regular background-light700_dark300 light-border-2 text-dark300_light700 no-focus min-h-[56px] border"
+                    placeholder="Add Tags..."
+                    {...field}
+                  />
+                  Tags
+                </div>
               </FormControl>
+
               <FormMessage />
+
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Add up to 3 tags to describe what your question is about. You
                 need to press enter to add a tag.
