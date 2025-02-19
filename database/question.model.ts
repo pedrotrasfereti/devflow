@@ -11,6 +11,8 @@ export interface IQuestion {
   downvotes: number;
 }
 
+export interface IQuestionDoc extends IQuestion, Document {}
+
 const QuestionSchema = new Schema(
   {
     author: { type: Schema.Types.ObjectId, ref: "User", required: true },
