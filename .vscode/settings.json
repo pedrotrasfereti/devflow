@@ -38,7 +38,10 @@
     "**/next-env.d.ts": true,
     "**/components.json": true,
     "**/postcss.config.mjs": true,
-    "**/tsconfig.json": true
+    "**/tsconfig.json": true,
+    ".gitignore": true,
+    ".eslintrc.json": true,
+    "package-lock.json": true
   },
   "editor.wordWrap": "on"
 }
