@@ -67,6 +67,7 @@ export async function DELETE(
   }
 }
 
+// PUT /api/users/{id}
 export async function PUT(
   request: Request,
   context: { params: Promise<{ id: string }> }
