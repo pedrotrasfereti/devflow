@@ -32,27 +32,27 @@ export async function POST(request: Request) {
     await dbConnect();
     const body = await request.json();
 
-    // Validate user data
     const validatedData = UserSchema.safeParse(body);
 
+    // Validate user data
     if (!validatedData.success) {
       throw new ValidationError(validatedData.error.flatten().fieldErrors);
     }
 
     const user = validatedData.data;
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email: user.email });
 
+    // Check if user already exists
     if (existingUser) {
       throw new Error("User already exists.");
     }
 
-    // Check if username is already taken
     const existingUsername = await User.findOne({
       username: user.username,
     });
 
+    // Check if username is already taken
     if (existingUsername) {
       throw new Error("That username is taken. Try a different one.");
     }

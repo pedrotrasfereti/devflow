@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 
 import User from "@/database/user.model";
 import handleError from "@/lib/handlers/error";
-import { NotFoundError } from "@/lib/http-errors";
+import { NotFoundError, ValidationError } from "@/lib/http-errors";
 import dbConnect from "@/lib/mongoose";
+import { UserSchema } from "@/lib/validations";
 import { APIErrorResponse } from "@/types/global";
 
 // GET /api/users/{id}
@@ -38,7 +39,7 @@ export async function GET(
 
 // DELETE /api/users/{id}
 export async function DELETE(
-  request: Request,
+  _: Request,
   context: { params: Promise<{ id: string }> }
 ) {
   const { id } = await context.params;
@@ -60,6 +61,41 @@ export async function DELETE(
         data: user,
       },
       { status: 204 }
+    );
+  } catch (error) {
+    return handleError(error, "api") as APIErrorResponse;
+  }
+}
+
+export async function PUT(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id } = await context.params;
+  if (!id) throw new NotFoundError("User");
+
+  try {
+    await dbConnect();
+
+    const body = await request.json();
+
+    const validatedData = UserSchema.safeParse(body);
+
+    // Validate user data
+    if (!validatedData.success) {
+      throw new ValidationError(validatedData.error.flatten().fieldErrors);
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(id, validatedData.data, {
+      new: true, // Setting this option to true returns the updated user
+    });
+
+    return NextResponse.json(
+      {
+        success: true,
+        data: updatedUser,
+      },
+      { status: 200 }
     );
   } catch (error) {
     return handleError(error, "api") as APIErrorResponse;
