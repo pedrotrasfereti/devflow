@@ -7,6 +7,7 @@ import dbConnect from "@/lib/mongoose";
 import { AccountSchema } from "@/lib/validations";
 import { APIErrorResponse } from "@/types/global";
 
+// GET /api/accounts
 export async function GET() {
   try {
     await dbConnect();
@@ -22,6 +23,7 @@ export async function GET() {
   }
 }
 
+// POST /api/accounts
 export async function POST(request: Request) {
   try {
     await dbConnect();
