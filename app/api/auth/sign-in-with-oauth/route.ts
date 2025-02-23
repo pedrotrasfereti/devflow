@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { NextResponse } from "next/server";
 import slugify from "slugify";
 
 import Account from "@/database/account.model";
@@ -92,6 +93,8 @@ export async function POST(request: Request) {
 
     // Apply changes
     await session.commitTransaction();
+
+    return NextResponse.json({ success: true });
   } catch (error: unknown) {
     // Abort changes
     await session.abortTransaction();
