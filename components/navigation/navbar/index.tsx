@@ -2,10 +2,19 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+import { auth } from "@/auth";
+import UserAvatar from "@/components/UserAvatar";
+
 import MobileNavigation from "./MobileNavigation";
 import ThemeToggle from "./ThemeToggle";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await auth();
+
+  const userId = session?.user?.id;
+  const username = session!.user!.name!;
+  const avatarImage = session?.user?.image;
+
   return (
     <nav className="flex-between background-light900_dark200 fixed z-50 w-full gap-5 p-6 shadow-light-200 dark:shadow-none sm:px-12">
       <Link href="/" className="flex items-center gap-2">
@@ -25,9 +34,13 @@ const Navbar = () => {
 
       <div className="flex-between gap-5">
         <ThemeToggle />
-      </div>
 
-      <MobileNavigation />
+        {userId && (
+          <UserAvatar id={userId} name={username} imageUrl={avatarImage} />
+        )}
+
+        <MobileNavigation />
+      </div>
     </nav>
   );
 };
