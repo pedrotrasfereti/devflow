@@ -52,12 +52,7 @@ const NavLinks = ({
               className={cn({ "invert-colors": !isActive })}
             />
 
-            <p
-              className={cn(
-                isActive ? "base-bold" : "base-medium",
-                "max-lg:hidden"
-              )}
-            >
+            <p className={cn(isActive ? "base-bold" : "base-medium")}>
               {item.label}
             </p>
           </Link>
