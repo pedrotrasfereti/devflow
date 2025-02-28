@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import {
   DefaultValues,
   FieldValues,
@@ -50,6 +51,12 @@ const AuthForm = <T extends FieldValues>({
     const result = (await onSubmit(data)) as ActionResponse;
 
     if (result?.success) {
+      await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
+
       toast({
         title: "Success",
         description:

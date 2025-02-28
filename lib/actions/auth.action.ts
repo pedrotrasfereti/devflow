@@ -2,7 +2,6 @@
 
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
-import { signIn } from "next-auth/react";
 
 import Account from "@/database/account.model";
 import User from "@/database/user.model";
@@ -65,8 +64,6 @@ export async function signUpWithCredentials(
 
     await session.commitTransaction();
 
-    await signIn("credentials", { email, password, redirect: false });
-
     return { success: true };
   } catch (error) {
     await session.abortTransaction();
@@ -108,8 +105,6 @@ export async function signInWithCredentials(
     );
 
     if (!passwordMatch) throw new Error("Wrong password");
-
-    await signIn("credentials", { email, password, redirect: false });
 
     return { success: true };
   } catch (error) {
