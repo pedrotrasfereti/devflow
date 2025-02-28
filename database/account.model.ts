@@ -23,6 +23,6 @@ const AccountSchema = new Schema(
   { timestamps: true }
 );
 
-const Account = models?.account || model<IAccount>("Account", AccountSchema);
+const Account = models?.Account || model<IAccount>("Account", AccountSchema);
 
 export default Account;

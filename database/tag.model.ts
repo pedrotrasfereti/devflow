@@ -12,6 +12,6 @@ const TagSchema = new Schema({
   questions: { type: Number, default: 0 },
 });
 
-const Tag = models?.tag || model<ITag>("Tag", TagSchema);
+const Tag = models?.Tag || model<ITag>("Tag", TagSchema);
 
 export default Tag;
