@@ -9,7 +9,11 @@ import { ActionResponse, ErrorResponse, Question } from "@/types/global";
 
 import action from "../handlers/action";
 import handleError from "../handlers/error";
-import { AskQuestionSchema, EditQuestionSchema } from "../validations";
+import {
+  AskQuestionSchema,
+  EditQuestionSchema,
+  GetQuestionSchema,
+} from "../validations";
 
 export async function createQuestion(
   params: createQuestionParams
@@ -188,5 +192,33 @@ export async function editQuestion(
     return handleError(error) as ErrorResponse;
   } finally {
     session.endSession();
+  }
+}
+
+export async function getQuestion(
+  params: getQuestionParams
+): Promise<ActionResponse<Question>> {
+  const validatedQuestion = await action({
+    params,
+    schema: GetQuestionSchema,
+    authorize: true,
+  });
+
+  if (validatedQuestion instanceof Error) {
+    return handleError(validatedQuestion) as ErrorResponse;
+  }
+
+  const { questionId } = validatedQuestion.params!;
+
+  try {
+    const question = await QuestionModel.findById(questionId).populate("tags");
+
+    if (!question) {
+      throw new Error("Question not found");
+    }
+
+    return { success: true, data: JSON.parse(JSON.stringify(question)) };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
   }
 }
