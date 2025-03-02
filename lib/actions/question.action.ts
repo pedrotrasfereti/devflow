@@ -2,10 +2,10 @@
 
 import mongoose from "mongoose";
 
-import Question from "@/database/question.model";
+import QuestionModel from "@/database/question.model";
 import TagQuestion from "@/database/tag-question.model";
 import Tag from "@/database/tag.model";
-import { ActionResponse, ErrorResponse } from "@/types/global";
+import { ActionResponse, ErrorResponse, Question } from "@/types/global";
 
 import action from "../handlers/action";
 import handleError from "../handlers/error";
@@ -13,7 +13,7 @@ import { AskQuestionSchema } from "../validations";
 
 export async function createQuestion(
   params: createQuestionParams
-): Promise<ActionResponse> {
+): Promise<ActionResponse<Question>> {
   const validatedQuestion = await action({
     params,
     schema: AskQuestionSchema,
@@ -33,7 +33,7 @@ export async function createQuestion(
 
   try {
     // Create question
-    const [question] = await Question.create(
+    const [question] = await QuestionModel.create(
       [
         {
           title,
@@ -69,7 +69,7 @@ export async function createQuestion(
 
     await TagQuestion.insertMany(tagQuestions, { session });
 
-    await Question.findByIdAndUpdate(
+    await QuestionModel.findByIdAndUpdate(
       question._id,
       { $push: { tags: { $each: tagIds } } },
       { session }
