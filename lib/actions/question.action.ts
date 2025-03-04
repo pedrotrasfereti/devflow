@@ -18,6 +18,7 @@ import {
   AskQuestionSchema,
   EditQuestionSchema,
   GetQuestionSchema,
+  IncrementViewsSchema,
   PaginatedSearchParamsSchema,
 } from "../validations";
 
@@ -306,6 +307,37 @@ export async function getQuestions(
       success: true,
       data: { questions: JSON.parse(JSON.stringify(questions)), isNext },
     };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+export async function incrementViews(
+  params: IncrementViewsParams
+): Promise<ActionResponse<{ views: number }>> {
+  const validatedParams = await action({
+    params,
+    schema: IncrementViewsSchema,
+  });
+
+  if (validatedParams instanceof Error) {
+    return handleError(validatedParams) as ErrorResponse;
+  }
+
+  const { questionId } = validatedParams.params!;
+
+  try {
+    const question = await QuestionModel.findById(questionId);
+
+    if (!question) {
+      throw new Error("Question not found");
+    }
+
+    question.views += 1;
+
+    await question.save();
+
+    return { success: true, data: { views: question.views } };
   } catch (error) {
     return handleError(error) as ErrorResponse;
   }
