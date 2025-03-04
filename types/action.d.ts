@@ -29,3 +29,7 @@ interface editQuestionParams extends createQuestionParams {
 interface getQuestionParams {
   questionId: string;
 }
+
+interface GetTagQuestionsParams extends Omit<PaginatedSearchParams, "filter"> {
+  tagId: string;
+}
