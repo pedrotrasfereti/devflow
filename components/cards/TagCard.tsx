@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-import { Badge } from "../ui/badge";
-
 import ROUTES from "@/constants/routes";
 import { getDeviconClassName } from "@/lib/utils";
+
+import { Badge } from "../ui/badge";
 
 interface Props {
   _id: string;
@@ -68,7 +68,7 @@ const TagCard = ({
     } else {
       return (
         <Link
-          href={ROUTES.TAGS(_id)}
+          href={ROUTES.TAG(_id)}
           className="flex items-center justify-between gap-2"
         >
           {CardContent}
