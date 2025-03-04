@@ -1,12 +1,12 @@
 import Link from "next/link";
 import React from "react";
 
-import TagCard from "./TagCard";
-import Metric from "../Metric";
-
 import ROUTES from "@/constants/routes";
 import { getTimeStamp } from "@/lib/utils";
 import { Question, Tag } from "@/types/global";
+
+import Metric from "../Metric";
+import TagCard from "./TagCard";
 
 interface Props {
   question: Question;
@@ -56,6 +56,7 @@ const QuestionCard = ({
             title=" Votes"
             textStyles="small-medium text-dark400_light800"
           />
+
           <Metric
             imgUrl="/icons/message.svg"
             alt="answers"
@@ -63,6 +64,7 @@ const QuestionCard = ({
             title=" Answers"
             textStyles="small-medium text-dark400_light800"
           />
+
           <Metric
             imgUrl="/icons/eye.svg"
             alt="views"
