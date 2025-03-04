@@ -2,7 +2,7 @@
 
 import mongoose, { FilterQuery } from "mongoose";
 
-import QuestionModel from "@/database/question.model";
+import QuestionModel, { IQuestionDoc } from "@/database/question.model";
 import TagQuestion from "@/database/tag-question.model";
 import Tag, { ITagDoc } from "@/database/tag.model";
 import {
@@ -64,7 +64,7 @@ export async function createQuestion(
     for (const tag of tags) {
       const existingTag = await Tag.findOneAndUpdate(
         {
-          name: { $regex: new RegExp(`^${tag}$`, "i") },
+          name: { $regex: `^${tag}$`, $options: "i" },
         },
         { $setOnInsert: { name: tag }, $inc: { questions: 1 } },
         { upsert: true, new: true, session }
@@ -98,7 +98,7 @@ export async function createQuestion(
 
 export async function editQuestion(
   params: editQuestionParams
-): Promise<ActionResponse<Question>> {
+): Promise<ActionResponse<IQuestionDoc>> {
   const validatedQuestion = await action({
     params,
     schema: EditQuestionSchema,
@@ -145,7 +145,7 @@ export async function editQuestion(
     if (tagsToAdd.length > 0) {
       for (const tag of tagsToAdd) {
         const existingTag = await Tag.findOneAndUpdate(
-          { name: { $regex: new RegExp(`^${tag}$`, "i") } },
+          { name: { $regex: `^${tag}$`, $options: "i" } },
           { $setOnInsert: { name: tag }, $inc: { questions: 1 } },
           { upsert: true, new: true, session }
         );
@@ -258,8 +258,8 @@ export async function getQuestions(
 
   if (query) {
     filterQuery.$or = [
-      { title: { $regex: new RegExp(query, "i") } },
-      { content: { $regex: new RegExp(query, "i") } },
+      { title: { $regex: query, $options: "i" } },
+      { content: { $regex: query, $options: "i" } },
     ];
   }
 
