@@ -22,20 +22,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const { email, password } = validatedFields.data;
 
           const { data: existingAccount } = (await api.accounts.getByProvider(
-            email
+            email,
           )) as ActionResponse<IAccountDoc>;
 
           if (!existingAccount) return null;
 
           const { data: existingUser } = (await api.users.getById(
-            existingAccount.userId.toString()
+            existingAccount.userId.toString(),
           )) as ActionResponse<IUserDoc>;
 
           if (!existingUser) return null;
 
           const isValidPassword = await bcrypt.compare(
             password,
-            existingAccount.password!
+            existingAccount.password!,
           );
 
           if (isValidPassword) {
@@ -63,7 +63,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           (await api.accounts.getByProvider(
             account.type === "credentials"
               ? token.email!
-              : account.providerAccountId
+              : account.providerAccountId,
           )) as ActionResponse<IAccountDoc>;
 
         if (!success || !existingAccount) return token;

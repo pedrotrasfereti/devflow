@@ -19,7 +19,7 @@ export async function GET() {
         success: true,
         data: users,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     return handleError(error, "api") as APIErrorResponse;

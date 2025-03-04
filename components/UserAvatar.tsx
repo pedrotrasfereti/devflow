@@ -45,7 +45,7 @@ const UserAvatar = ({
           <AvatarFallback
             className={cn(
               "primary-gradient font-space-grotesk font-bold tracking-wider text-white",
-              fallbackClassName
+              fallbackClassName,
             )}
           >
             {usernameInitials}

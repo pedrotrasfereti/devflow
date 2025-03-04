@@ -24,7 +24,7 @@ const QuestionSchema = new Schema(
     upvotes: { type: Number, default: 0 },
     downvotes: { type: Number, default: 0 },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Question =

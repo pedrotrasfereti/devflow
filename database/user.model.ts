@@ -24,7 +24,7 @@ const UserSchema = new Schema(
     portfolio: { type: String },
     reputation: { type: Number, default: 0 },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const User = models?.User || model<IUser>("User", UserSchema);

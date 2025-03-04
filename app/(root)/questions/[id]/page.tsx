@@ -7,12 +7,14 @@ import { Preview } from "@/components/editor/Preview";
 import Metric from "@/components/Metric";
 import UserAvatar from "@/components/UserAvatar";
 import ROUTES from "@/constants/routes";
-import { getQuestion } from "@/lib/actions/question.action";
+import { getQuestion, incrementViews } from "@/lib/actions/question.action";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
 import { RouteParams, Tag } from "@/types/global";
 
 const QuestionDetails = async ({ params }: RouteParams) => {
   const { id: questionId } = await params;
+
+  await incrementViews({ questionId });
 
   const { success, data: question } = await getQuestion({
     questionId,

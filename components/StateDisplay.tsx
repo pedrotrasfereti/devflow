@@ -19,7 +19,7 @@ interface StateDisplayProps {
 
 const StateDisplay = ({ image, title, message, button }: StateDisplayProps) => {
   return (
-    <div className="mt-16 flex w-full flex-col items-center justify-center sm:ml-36">
+    <div className="mt-16 flex w-full flex-col items-center justify-center sm:mt-36">
       <>
         <Image
           src={image.dark}

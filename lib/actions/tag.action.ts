@@ -17,7 +17,7 @@ import {
 } from "../validations";
 
 export const getTags = async (
-  params: PaginatedSearchParams
+  params: PaginatedSearchParams,
 ): Promise<ActionResponse<{ tags: Tag[]; isNext: boolean }>> => {
   const validatedParams = await action({
     params,
@@ -82,7 +82,7 @@ export const getTags = async (
 };
 
 export const getTagQuestions = async (
-  params: GetTagQuestionsParams
+  params: GetTagQuestionsParams,
 ): Promise<
   ActionResponse<{ tag: Tag; questions: Question[]; isNext: boolean }>
 > => {
