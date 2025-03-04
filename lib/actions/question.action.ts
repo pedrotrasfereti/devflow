@@ -286,7 +286,7 @@ export async function getQuestions(
 
     const questions = await QuestionModel.find(filterQuery)
       .populate("tags", "name")
-      .populate("author", "name image")
+      // .populate("author", "name image")
       .lean()
       .sort(sortCriteria)
       .skip(skipValue)
