@@ -181,7 +181,7 @@ export async function editQuestion(
       );
 
       question.tags = question.tags.filter(
-        (tagId: mongoose.Types.ObjectId) => !tagsToRemove.includes(tagId)
+        (tagId: mongoose.Types.ObjectId) => !tagIdsToRemove.includes(tagId)
       );
     }
 
