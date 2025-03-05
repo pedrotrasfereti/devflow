@@ -8,14 +8,11 @@ import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
 import { EMPTY_QUESTION } from "@/constants/ui-states";
 import { getQuestions } from "@/lib/actions/question.action";
+import { RouteParams } from "@/types/global";
 
-interface SearchParams {
-  searchParams: Promise<{ [key: string]: string }>;
-}
-
-const Home = async ({ searchParams }: SearchParams) => {
+const Home = async ({ params }: RouteParams) => {
   // Example: url.com/?page=1&itemsPerPage=10&query=hello&filter=react
-  const { page, itemsPerPage, query, filter } = await searchParams;
+  const { page, itemsPerPage, query, filter } = await params;
 
   const { success, data, error } = await getQuestions({
     page: Number(page) || 1,
