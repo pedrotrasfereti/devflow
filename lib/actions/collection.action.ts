@@ -45,6 +45,8 @@ export async function toggleSaveQuestion(
     if (collection) {
       await CollectionModel.findByIdAndDelete(collection.id);
 
+      revalidatePath(ROUTES.QUESTION(questionId));
+
       return { success: true, data: { saved: false } };
     }
 
@@ -56,6 +58,39 @@ export async function toggleSaveQuestion(
     revalidatePath(ROUTES.QUESTION(questionId));
 
     return { success: true, data: { saved: true } };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+export async function hasSavedQuestion(
+  params: CollectionBaseParams
+): Promise<ActionResponse<{ saved: boolean }>> {
+  const validatedParams = await action({
+    params,
+    schema: CollectionBaseSchema,
+    authorize: true,
+  });
+
+  if (validatedParams instanceof Error) {
+    return handleError(validatedParams) as ErrorResponse;
+  }
+
+  const { questionId } = validatedParams.params!;
+  const userId = validatedParams.session?.user?.id;
+
+  try {
+    const collection = await CollectionModel.findOne({
+      question: questionId,
+      author: userId,
+    });
+
+    return {
+      success: true,
+      data: {
+        saved: !!collection,
+      },
+    };
   } catch (error) {
     return handleError(error) as ErrorResponse;
   }
