@@ -14,20 +14,20 @@ import { ActionResponse, Answer, ErrorResponse } from "@/types/global";
 import { CreateAnswerParams, GetAnswersParams } from "@/types/action";
 
 export async function createAnswer(
-  params: CreateAnswerParams,
+  params: CreateAnswerParams
 ): Promise<ActionResponse<IAnswerDoc>> {
-  const validatedParams = await action({
+  const validatedAnswer = await action({
     params,
     schema: PostAnswerSchema,
     authorize: true,
   });
 
-  if (validatedParams instanceof Error) {
-    return handleError(validatedParams) as ErrorResponse;
+  if (validatedAnswer instanceof Error) {
+    return handleError(validatedAnswer) as ErrorResponse;
   }
 
-  const { content, questionId } = validatedParams.params!;
-  const userId = validatedParams?.session?.user?.id;
+  const { content, questionId } = validatedAnswer.params!;
+  const userId = validatedAnswer?.session?.user?.id;
 
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -45,7 +45,7 @@ export async function createAnswer(
           content,
         },
       ],
-      { session },
+      { session }
     );
 
     if (!newAnswer) {
@@ -79,13 +79,13 @@ export async function getAnswers(params: GetAnswersParams): Promise<
     totalAnswers: number;
   }>
 > {
-  const validationResult = await action({
+  const validatedParams = await action({
     params,
     schema: GetAnswersSchema,
   });
 
-  if (validationResult instanceof Error) {
-    return handleError(validationResult) as ErrorResponse;
+  if (validatedParams instanceof Error) {
+    return handleError(validatedParams) as ErrorResponse;
   }
 
   const { questionId, page = 1, itemsPerPage = 10, filter } = params;
