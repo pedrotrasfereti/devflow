@@ -14,10 +14,10 @@ function isError(error: unknown): error is Error {
 
 export async function fetchHandler<T>(
   url: string,
-  options: FetchOptions = {},
+  options: FetchOptions = {}
 ): Promise<ActionResponse<T>> {
   const {
-    timeout = 5000,
+    timeout = 100000,
     headers: customHeaders = {},
     ...restOptions
   } = options;
@@ -31,7 +31,6 @@ export async function fetchHandler<T>(
   };
 
   const headers: HeadersInit = { ...defaultHeaders, ...customHeaders };
-
   const config: RequestInit = {
     ...restOptions,
     headers,
