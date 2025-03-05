@@ -8,8 +8,16 @@ import { Preview } from "../editor/Preview";
 
 import UserAvatar from "../UserAvatar";
 import { Answer } from "@/types/global";
+import Votes from "../votes/Votes";
 
-const AnswerCard = ({ _id, author, content, createdAt }: Answer) => {
+const AnswerCard = ({
+  _id,
+  content,
+  author,
+  upvotes,
+  downvotes,
+  createdAt,
+}: Answer) => {
   return (
     <article className="light-border border-b py-10">
       <span id={JSON.stringify(_id)} className="hash-span" />
@@ -38,7 +46,14 @@ const AnswerCard = ({ _id, author, content, createdAt }: Answer) => {
           </Link>
         </div>
 
-        <div className="flex justify-end">Votes</div>
+        <div className="flex justify-end">
+          <Votes
+            upvotes={upvotes}
+            hasUpvoted={true}
+            downvotes={downvotes}
+            hasDownvoted={false}
+          />
+        </div>
       </div>
 
       <Preview content={content} />
