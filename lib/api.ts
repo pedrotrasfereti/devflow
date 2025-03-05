@@ -63,7 +63,7 @@ export const api = {
   ai: {
     getAIAnswer: (
       question: string,
-      content: string
+      content: string,
     ): Promise<ActionResponse<string>> =>
       fetchHandler(`${API_BASE_URL}/ai/answers`, {
         method: "POST",

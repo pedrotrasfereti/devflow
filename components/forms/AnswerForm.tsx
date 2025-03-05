@@ -85,7 +85,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
     try {
       const { success, data, error } = await api.ai.getAIAnswer(
         questionTitle,
-        questionContent
+        questionContent,
       );
 
       if (!success) {
