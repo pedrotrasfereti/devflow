@@ -52,7 +52,7 @@ export async function POST(request: Request) {
     if (!existingUser) {
       [existingUser] = await User.create(
         [{ name, username: formattedUsername, email, image }],
-        { session },
+        { session }
       );
     } else {
       // Update user data with the newest oAuth Provider info
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
       if (Object.keys(updatedData).length > 0) {
         await User.updateOne(
           { _id: existingUser._id },
-          { $set: updatedData },
+          { $set: updatedData }
         ).session(session);
       }
     }
@@ -87,7 +87,7 @@ export async function POST(request: Request) {
             providerAccountId,
           },
         ],
-        { session },
+        { session }
       );
     }
 
@@ -100,6 +100,6 @@ export async function POST(request: Request) {
     await session.abortTransaction();
     return handleError(error, "api") as APIErrorResponse;
   } finally {
-    session.endSession();
+    await session.endSession();
   }
 }
