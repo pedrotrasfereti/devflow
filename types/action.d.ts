@@ -1,4 +1,4 @@
-import { PaginatedSearchParams } from "./global";
+import { Collection, PaginatedSearchParams } from "./global";
 
 interface OAuthSignIn {
   provider: "github" | "google";
@@ -68,4 +68,9 @@ interface HasVotedResponse {
 
 interface CollectionBaseParams {
   questionId: string;
+}
+
+interface CollectionResponse {
+  collection: Collection[];
+  isNext: boolean;
 }
