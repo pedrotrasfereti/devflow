@@ -21,6 +21,8 @@ import {
   Answer as AnswerModel,
   Vote as VoteModel,
 } from "@/database";
+import { revalidatePath } from "next/cache";
+import ROUTES from "@/constants/routes";
 
 async function updateVoteCount(
   params: UpdateVoteCountParams,
@@ -77,7 +79,7 @@ export async function createVote(
   const userId = validatedVote.session?.user?.id;
 
   if (!userId) {
-    handleError(new Error("Unauthorized")) as ErrorResponse;
+    return handleError(new Error("Unauthorized")) as ErrorResponse;
   }
 
   const session = await mongoose.startSession();
@@ -109,14 +111,24 @@ export async function createVote(
           { new: true, session }
         );
 
-        // Increment vote count
+        // Update vote count
+        await updateVoteCount({
+          targetId,
+          targetType,
+          voteType: existingVote.voteType,
+          change: -1,
+        });
+
         await updateVoteCount({ targetId, targetType, voteType, change: 1 });
       }
     } else {
       // If the user has not voted yet, create a new vote
-      await VoteModel.create([{ targetId, targetType, voteType, change: 1 }], {
-        session,
-      });
+      await VoteModel.create(
+        [{ author: userId, targetId, targetType, voteType, change: 1 }],
+        {
+          session,
+        }
+      );
 
       await updateVoteCount(
         { targetId, targetType, voteType, change: 1 },
@@ -126,6 +138,8 @@ export async function createVote(
 
     await session.commitTransaction();
     session.endSession();
+
+    revalidatePath(ROUTES.QUESTION(targetId));
 
     return { success: true };
   } catch (error) {

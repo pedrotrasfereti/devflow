@@ -9,6 +9,7 @@ import { Preview } from "../editor/Preview";
 import UserAvatar from "../UserAvatar";
 import { Answer } from "@/types/global";
 import Votes from "../votes/Votes";
+import { hasVoted } from "@/lib/actions/vote.action";
 
 const AnswerCard = ({
   _id,
@@ -18,6 +19,11 @@ const AnswerCard = ({
   downvotes,
   createdAt,
 }: Answer) => {
+  const hasVotedPromise = hasVoted({
+    targetId: _id,
+    targetType: "Answer",
+  });
+
   return (
     <article className="light-border border-b py-10">
       <span id={JSON.stringify(_id)} className="hash-span" />
@@ -48,10 +54,11 @@ const AnswerCard = ({
 
         <div className="flex justify-end">
           <Votes
+            targetId={_id}
+            targetType="Answer"
             upvotes={upvotes}
-            hasUpvoted={true}
             downvotes={downvotes}
-            hasDownvoted={false}
+            hasVotedPromise={hasVotedPromise}
           />
         </div>
       </div>
