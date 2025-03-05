@@ -12,6 +12,7 @@ import { formatNumber, getTimeStamp } from "@/lib/utils";
 import { RouteParams, Tag } from "@/types/global";
 import AnswerForm from "@/components/forms/AnswerForm";
 import { getAnswers } from "@/lib/actions/answer.action";
+import Answers from "@/components/answers/AllAnswers";
 
 const QuestionDetails = async ({ params }: RouteParams) => {
   const { id: questionId } = await params;
@@ -36,8 +37,6 @@ const QuestionDetails = async ({ params }: RouteParams) => {
     itemsPerPage: 10,
     filter: "latest",
   });
-
-  console.log("ANSWERS", areAnswersLoaded, answersResult, answersError);
 
   const { author, createdAt, answers, views, tags, content, title } = question;
 
@@ -107,6 +106,15 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           />
         ))}
       </div>
+
+      <section className="my-5">
+        <Answers
+          data={answersResult?.answers}
+          success={areAnswersLoaded}
+          error={answersError}
+          totalAnswers={answersResult?.totalAnswers || 0}
+        />
+      </section>
 
       <section className="my-5">
         <AnswerForm questionId={question._id} />
