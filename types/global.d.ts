@@ -24,6 +24,15 @@ interface Question {
   createdAt: Date;
 }
 
+interface Answer {
+  _id: string;
+  content: string;
+  author: Author;
+  upvotes: number;
+  downvotes: number;
+  createdAt: Date;
+}
+
 type ActionResponse<T = null> = {
   success: boolean;
   data?: T;
@@ -51,11 +60,4 @@ interface PaginatedSearchParams {
   query?: string;
   filter?: string;
   sort?: string;
-}
-
-interface Answer {
-  _id: string;
-  author: Author;
-  content: string;
-  createdAt: Date;
 }
