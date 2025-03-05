@@ -21,6 +21,12 @@ import {
   IncrementViewsSchema,
   PaginatedSearchParamsSchema,
 } from "../validations";
+import {
+  createQuestionParams,
+  editQuestionParams,
+  getQuestionParams,
+  IncrementViewsParams,
+} from "@/types/action";
 
 export async function createQuestion(
   params: createQuestionParams,

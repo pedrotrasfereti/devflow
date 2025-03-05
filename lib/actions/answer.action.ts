@@ -5,15 +5,16 @@ import { revalidatePath } from "next/cache";
 
 import ROUTES from "@/constants/routes";
 import { Question } from "@/database";
-import Answer, { IAnswerDoc } from "@/database/answer.model";
+import AnswerModel, { IAnswerDoc } from "@/database/answer.model";
 
 import action from "../handlers/action";
 import handleError from "../handlers/error";
-import { PostAnswerSchema } from "../validations";
-import { ActionResponse, ErrorResponse } from "@/types/global";
+import { GetAnswersSchema, PostAnswerSchema } from "../validations";
+import { ActionResponse, Answer, ErrorResponse } from "@/types/global";
+import { CreateAnswerParams, GetAnswersParams } from "@/types/action";
 
 export async function createAnswer(
-  params: CreateAnswerParams
+  params: CreateAnswerParams,
 ): Promise<ActionResponse<IAnswerDoc>> {
   const validatedParams = await action({
     params,
@@ -36,7 +37,7 @@ export async function createAnswer(
 
     if (!question) throw new Error("Question not found");
 
-    const [newAnswer] = await Answer.create(
+    const [newAnswer] = await AnswerModel.create(
       [
         {
           author: userId,
@@ -44,7 +45,7 @@ export async function createAnswer(
           content,
         },
       ],
-      { session }
+      { session },
     );
 
     if (!newAnswer) {
@@ -68,5 +69,70 @@ export async function createAnswer(
     return handleError(error) as ErrorResponse;
   } finally {
     await session.endSession();
+  }
+}
+
+export async function getAnswers(params: GetAnswersParams): Promise<
+  ActionResponse<{
+    answers: Answer[];
+    isNext: boolean;
+    totalAnswers: number;
+  }>
+> {
+  const validationResult = await action({
+    params,
+    schema: GetAnswersSchema,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { questionId, page = 1, itemsPerPage = 10, filter } = params;
+
+  const skipValue = (Number(page) - 1) * itemsPerPage;
+  const limitValue = Number(itemsPerPage);
+
+  let sortCriteria = {};
+
+  switch (filter) {
+    case "latest":
+      sortCriteria = { createdAt: -1 };
+      break;
+    case "oldest":
+      sortCriteria = { createdAt: 1 };
+      break;
+    case "popular":
+      sortCriteria = { upvotes: -1 };
+      break;
+    default:
+      sortCriteria = { createdAt: -1 };
+      break;
+  }
+
+  try {
+    const totalAnswers = await AnswerModel.countDocuments({
+      question: questionId,
+    });
+
+    const answers = await AnswerModel.find({ question: questionId })
+      .populate("author", "_id name image")
+      .sort(sortCriteria)
+      .skip(skipValue)
+      .limit(limitValue);
+
+    const remainingAnswers = skipValue + answers.length;
+    const isNext = totalAnswers > remainingAnswers;
+
+    return {
+      success: true,
+      data: {
+        answers: JSON.parse(JSON.stringify(answers)),
+        isNext,
+        totalAnswers,
+      },
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
   }
 }

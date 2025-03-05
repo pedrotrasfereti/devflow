@@ -11,6 +11,7 @@ import { getQuestion, incrementViews } from "@/lib/actions/question.action";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
 import { RouteParams, Tag } from "@/types/global";
 import AnswerForm from "@/components/forms/AnswerForm";
+import { getAnswers } from "@/lib/actions/answer.action";
 
 const QuestionDetails = async ({ params }: RouteParams) => {
   const { id: questionId } = await params;
@@ -24,6 +25,19 @@ const QuestionDetails = async ({ params }: RouteParams) => {
   if (!success || !question) {
     return redirect("/404");
   }
+
+  const {
+    success: areAnswersLoaded,
+    data: answersResult,
+    error: answersError,
+  } = await getAnswers({
+    questionId,
+    page: 1,
+    itemsPerPage: 10,
+    filter: "latest",
+  });
+
+  console.log("ANSWERS", areAnswersLoaded, answersResult, answersError);
 
   const { author, createdAt, answers, views, tags, content, title } = question;
 
@@ -63,6 +77,7 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           title=""
           textStyles="small-regular text-dark400_light700"
         />
+
         <Metric
           imgUrl="/icons/message.svg"
           alt="message icon"
@@ -70,6 +85,7 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           title=""
           textStyles="small-regular text-dark400_light700"
         />
+
         <Metric
           imgUrl="/icons/eye.svg"
           alt="eye icon"

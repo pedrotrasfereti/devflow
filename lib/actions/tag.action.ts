@@ -15,6 +15,7 @@ import {
   GetTagQuestionsSchema,
   PaginatedSearchParamsSchema,
 } from "../validations";
+import { GetTagQuestionsParams } from "@/types/action";
 
 export const getTags = async (
   params: PaginatedSearchParams,
@@ -95,10 +96,10 @@ export const getTagQuestions = async (
     return handleError(validatedParams) as ErrorResponse;
   }
 
-  const { tagId, page = 1, pageSize = 10, query } = params;
+  const { tagId, page = 1, itemsPerPage = 10, query } = params;
 
-  const skip = (Number(page) - 1) * pageSize;
-  const limit = Number(pageSize);
+  const skipValue = (Number(page) - 1) * itemsPerPage;
+  const limitValue = Number(itemsPerPage);
 
   try {
     const tag = await TagModel.findById(tagId);
@@ -120,10 +121,11 @@ export const getTagQuestions = async (
         { path: "author", select: "name image" },
         { path: "tags", select: "name" },
       ])
-      .skip(skip)
-      .limit(limit);
+      .skip(skipValue)
+      .limit(limitValue);
 
-    const isNext = totalQuestions > skip + questions.length;
+    const remainingTags = skipValue + questions.length;
+    const isNext = totalQuestions > remainingTags;
 
     return {
       success: true,
