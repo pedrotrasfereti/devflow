@@ -8,11 +8,12 @@ import Metric from "@/components/Metric";
 import UserAvatar from "@/components/UserAvatar";
 import ROUTES from "@/constants/routes";
 import { getQuestion, incrementViews } from "@/lib/actions/question.action";
-import { formatNumber, getTimeStamp } from "@/lib/utils";
+import { formatCompactNumber, getTimeStamp } from "@/lib/utils";
 import { RouteParams, Tag } from "@/types/global";
 import AnswerForm from "@/components/forms/AnswerForm";
 import { getAnswers } from "@/lib/actions/answer.action";
 import Answers from "@/components/answers/AllAnswers";
+import Votes from "@/components/votes/Votes";
 
 const QuestionDetails = async ({ params }: RouteParams) => {
   const { id: questionId } = await params;
@@ -23,9 +24,7 @@ const QuestionDetails = async ({ params }: RouteParams) => {
     questionId,
   });
 
-  if (!success || !question) {
-    return redirect("/404");
-  }
+  if (!success || !question) return redirect("/404");
 
   const {
     success: areAnswersLoaded,
@@ -59,7 +58,12 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           </div>
 
           <div className="flex justify-end">
-            <p>Votes</p>
+            <Votes
+              upvotes={question.upvotes}
+              hasUpvoted={true}
+              downvotes={question.downvotes}
+              hasDownvoted={false}
+            />
           </div>
         </div>
 
@@ -88,7 +92,7 @@ const QuestionDetails = async ({ params }: RouteParams) => {
         <Metric
           imgUrl="/icons/eye.svg"
           alt="eye icon"
-          value={formatNumber(views)}
+          value={formatCompactNumber(views)}
           title=""
           textStyles="small-regular text-dark400_light700"
         />
