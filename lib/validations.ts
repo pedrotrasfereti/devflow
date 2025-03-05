@@ -66,7 +66,7 @@ export const AskQuestionSchema = z.object({
       z
         .string()
         .min(1, { message: "Tag is required." })
-        .max(30, { message: "Tag cannot exceed 30 characters." }),
+        .max(30, { message: "Tag cannot exceed 30 characters." })
     )
     .min(1, { message: "At least one tag is required." })
     .max(3, { message: "Cannot add more than 3 tags." }),
@@ -164,4 +164,15 @@ export const PostAnswerSchema = AnswerSchema.extend({
 
 export const GetAnswersSchema = PaginatedSearchParamsSchema.extend({
   questionId: z.string().min(1, { message: "Question ID is required." }),
+});
+
+export const AIAnswerSchema = z.object({
+  question: z
+    .string()
+    .min(5, { message: "Question is required." })
+    .max(100, { message: "Question cannot exceed 100 characters." }),
+  content: z
+    .string()
+    .min(1, { message: "Body is required" })
+    .max(100, { message: "Body cannot exceed 100 characters" }),
 });
