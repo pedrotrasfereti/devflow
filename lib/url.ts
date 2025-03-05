@@ -41,6 +41,6 @@ export const removeKeysFromUrlQuery = ({
       query: queryString,
     },
     // Clear key instead of setting it to null
-    { skipNull: true },
+    { skipNull: true }
   );
 };

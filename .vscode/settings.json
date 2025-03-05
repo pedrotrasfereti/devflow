@@ -11,13 +11,6 @@
     "typescript",
     "typescriptreact"
   ],
-  "prettier.tabWidth": 2,
-  "prettier.useTabs": false,
-  "prettier.semi": true,
-  "prettier.singleQuote": false,
-  "prettier.jsxSingleQuote": false,
-  "prettier.trailingComma": "es5",
-  "prettier.arrowParens": "always",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -40,7 +33,6 @@
     "**/postcss.config.mjs": true,
     "**/tsconfig.json": true,
     ".gitignore": true,
-    ".eslintrc.json": true,
     "package-lock.json": true
   },
   "editor.wordWrap": "on"

@@ -27,7 +27,7 @@ export async function POST(request: Request) {
         success: true,
         data: account,
       },
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     return handleError(error, "api") as APIErrorResponse;

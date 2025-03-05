@@ -14,7 +14,7 @@ import { SignInSchema, SignUpSchema } from "../validations";
 import { AuthCredentials } from "@/types/action";
 
 export async function signUpWithCredentials(
-  params: AuthCredentials,
+  params: AuthCredentials
 ): Promise<ActionResponse> {
   const validatedAction = await action({ params, schema: SignUpSchema });
 
@@ -60,7 +60,7 @@ export async function signUpWithCredentials(
           password: hashedPassword,
         },
       ],
-      { session },
+      { session }
     );
 
     await session.commitTransaction();
@@ -76,7 +76,7 @@ export async function signUpWithCredentials(
 }
 
 export async function signInWithCredentials(
-  params: Pick<AuthCredentials, "email" | "password">,
+  params: Pick<AuthCredentials, "email" | "password">
 ): Promise<ActionResponse> {
   const validatedAction = await action({ params, schema: SignInSchema });
 
@@ -102,7 +102,7 @@ export async function signInWithCredentials(
 
     const passwordMatch = await bcrypt.compare(
       password,
-      existingAccount.password,
+      existingAccount.password
     );
 
     if (!passwordMatch) throw new Error("Wrong password");

@@ -16,7 +16,7 @@ export async function GET() {
 
     return NextResponse.json(
       { success: true, data: accounts },
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     return handleError(error, "api") as APIErrorResponse;
@@ -38,14 +38,14 @@ export async function POST(request: Request) {
 
     if (existingAccount)
       throw new ForbiddenError(
-        "An account with the same provider already exists",
+        "An account with the same provider already exists"
       );
 
     const newAccount = await Account.create(validatedData);
 
     return NextResponse.json(
       { success: true, data: newAccount },
-      { status: 201 },
+      { status: 201 }
     );
   } catch (error) {
     return handleError(error, "api") as APIErrorResponse;

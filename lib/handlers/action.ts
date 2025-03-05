@@ -30,7 +30,7 @@ async function action<T>({
     } catch (error) {
       if (error instanceof ZodError) {
         return new ValidationError(
-          error.flatten().fieldErrors as Record<string, string[]>,
+          error.flatten().fieldErrors as Record<string, string[]>
         );
       } else {
         return new Error("Schema validation failed");

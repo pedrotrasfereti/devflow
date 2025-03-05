@@ -10,7 +10,7 @@ import { APIErrorResponse } from "@/types/global";
 // GET /api/users/{id}
 export async function GET(
   _: Request,
-  context: { params: Promise<{ id: string }> },
+  context: { params: Promise<{ id: string }> }
 ) {
   const { id } = await context.params;
 
@@ -30,7 +30,7 @@ export async function GET(
         success: true,
         data: user,
       },
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     return handleError(error, "api") as APIErrorResponse;
@@ -40,7 +40,7 @@ export async function GET(
 // DELETE /api/users/{id}
 export async function DELETE(
   _: Request,
-  context: { params: Promise<{ id: string }> },
+  context: { params: Promise<{ id: string }> }
 ) {
   const { id } = await context.params;
 
@@ -60,7 +60,7 @@ export async function DELETE(
         success: true,
         data: user,
       },
-      { status: 204 },
+      { status: 204 }
     );
   } catch (error) {
     return handleError(error, "api") as APIErrorResponse;
@@ -70,7 +70,7 @@ export async function DELETE(
 // PUT /api/users/{id}
 export async function PUT(
   request: Request,
-  context: { params: Promise<{ id: string }> },
+  context: { params: Promise<{ id: string }> }
 ) {
   const { id } = await context.params;
   if (!id) throw new NotFoundError("User");
@@ -96,7 +96,7 @@ export async function PUT(
         success: true,
         data: updatedUser,
       },
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     return handleError(error, "api") as APIErrorResponse;

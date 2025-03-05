@@ -52,7 +52,7 @@ const QuestionForm = ({ question, isEdit = false }: QuestionFormParams) => {
 
   const handleAddTag = (
     e: React.KeyboardEvent<HTMLInputElement>,
-    field: { value: string[] },
+    field: { value: string[] }
   ) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -88,7 +88,7 @@ const QuestionForm = ({ question, isEdit = false }: QuestionFormParams) => {
   };
 
   const handleCreateQuestion = async (
-    data: z.infer<typeof AskQuestionSchema>,
+    data: z.infer<typeof AskQuestionSchema>
   ) => {
     startTransition(async () => {
       let result;

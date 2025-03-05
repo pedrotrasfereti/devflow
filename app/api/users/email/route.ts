@@ -31,7 +31,7 @@ export async function POST(request: Request) {
         success: true,
         data: user,
       },
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     return handleError(error, "api") as APIErrorResponse;

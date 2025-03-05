@@ -5,7 +5,7 @@ export class RequestError extends Error {
   constructor(
     statusCode: number,
     message: string,
-    errors?: Record<string, string[]>,
+    errors?: Record<string, string[]>
   ) {
     super(message);
     this.statusCode = statusCode;
@@ -32,7 +32,7 @@ export class ValidationError extends RequestError {
         } else {
           return messages.join(" and ");
         }
-      },
+      }
     );
 
     return formattedMessages.join(", ");
