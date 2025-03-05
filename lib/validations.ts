@@ -175,4 +175,5 @@ export const AIAnswerSchema = z.object({
     .string()
     .min(1, { message: "Body is required" })
     .max(100, { message: "Body cannot exceed 100 characters" }),
+  userAnswer: z.string().optional(),
 });

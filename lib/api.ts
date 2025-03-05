@@ -64,10 +64,11 @@ export const api = {
     getAIAnswer: (
       question: string,
       content: string,
+      userAnswer?: string
     ): Promise<ActionResponse<string>> =>
       fetchHandler(`${API_BASE_URL}/ai/answers`, {
         method: "POST",
-        body: JSON.stringify({ question, content }),
+        body: JSON.stringify({ question, content, userAnswer }),
       }),
   },
 };
