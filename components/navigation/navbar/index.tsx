@@ -12,7 +12,7 @@ const Navbar = async () => {
   const session = await auth();
 
   const userId = session?.user?.id;
-  const username = session!.user!.name!;
+  const username = session?.user?.name;
   const avatarImage = session?.user?.image;
 
   return (
@@ -36,7 +36,11 @@ const Navbar = async () => {
         <ThemeToggle />
 
         {userId && (
-          <UserAvatar id={userId} name={username} imageUrl={avatarImage} />
+          <UserAvatar
+            id={userId}
+            name={username || "Login"}
+            imageUrl={avatarImage}
+          />
         )}
 
         <MobileNavigation />
