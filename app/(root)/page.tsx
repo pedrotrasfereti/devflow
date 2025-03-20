@@ -9,6 +9,8 @@ import ROUTES from "@/constants/routes";
 import { EMPTY_QUESTION } from "@/constants/ui-states";
 import { getQuestions } from "@/lib/actions/question.action";
 import { RouteParams } from "@/types/global";
+import CommonFilter from "@/components/filters/CommonFilter";
+import { HomePageFilters } from "@/constants/filters";
 
 const Home = async ({ params }: RouteParams) => {
   // Example: url.com/?page=1&itemsPerPage=10&query=hello&filter=react
@@ -36,12 +38,18 @@ const Home = async ({ params }: RouteParams) => {
         </Button>
       </section>
 
-      <section className="mt-11">
+      <section className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearch
           route="/"
           imgSrc="/icons/search.svg"
           placeholder="Search questions..."
           classes="flex-1"
+        />
+
+        <CommonFilter
+          filters={HomePageFilters}
+          classes="min-h-[56px] sm:min-w-[170px]"
+          containerClasses="hidden max-md:flex"
         />
       </section>
 
