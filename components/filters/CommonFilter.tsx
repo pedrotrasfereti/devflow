@@ -15,8 +15,8 @@ interface Filter {
 
 interface Props {
   filters: Filter[];
-  classes: string;
-  containerClasses: string;
+  classes?: string;
+  containerClasses?: string;
 }
 
 function CommonFilter({ filters, classes = "", containerClasses = "" }: Props) {
