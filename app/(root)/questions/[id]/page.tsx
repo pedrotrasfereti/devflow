@@ -18,8 +18,9 @@ import { hasVoted } from "@/lib/actions/vote.action";
 import SaveQuestion from "@/components/questions/SaveQuestion";
 import { hasSavedQuestion } from "@/lib/actions/collection.action";
 
-const QuestionDetails = async ({ params }: RouteParams) => {
+const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
   const { id: questionId } = await params;
+  const { page, itemsPerPage, filter } = await searchParams;
 
   await incrementViews({ questionId });
 
@@ -35,9 +36,9 @@ const QuestionDetails = async ({ params }: RouteParams) => {
     error: answersError,
   } = await getAnswers({
     questionId,
-    page: 1,
-    itemsPerPage: 10,
-    filter: "latest",
+    page: Number(page) || 1,
+    itemsPerPage: Number(itemsPerPage) || 10,
+    filter,
   });
 
   const { author, createdAt, answers, views, tags, content, title } = question;

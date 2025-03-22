@@ -7,15 +7,17 @@ import ROUTES from "@/constants/routes";
 import { EMPTY_QUESTION } from "@/constants/ui-states";
 import { getTagQuestions } from "@/lib/actions/tag.action";
 import { RouteParams } from "@/types/global";
+import CommonFilter from "@/components/filters/CommonFilter";
+import { TagFilters } from "@/constants/filters";
 
 const Page = async ({ params, searchParams }: RouteParams) => {
   const { id } = await params;
-  const { page, pageSize, query } = await searchParams;
+  const { page, itemsPerPage, query } = await searchParams;
 
   const { success, data, error } = await getTagQuestions({
     tagId: id,
     page: Number(page) || 1,
-    pageSize: Number(pageSize) || 10,
+    itemsPerPage: Number(itemsPerPage) || 10,
     query,
   });
 
@@ -27,12 +29,17 @@ const Page = async ({ params, searchParams }: RouteParams) => {
         <h1 className="h1-bold text-dark100_light900">{tag?.name}</h1>
       </section>
 
-      <section className="mt-11">
+      <section className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearch
           route={ROUTES.TAG(id)}
           imgSrc="/icons/search.svg"
           placeholder="Search questions..."
           classes="flex-1"
+        />
+
+        <CommonFilter
+          filters={TagFilters}
+          classes="min-h-[56px] sm:min-w-[170px]"
         />
       </section>
 
