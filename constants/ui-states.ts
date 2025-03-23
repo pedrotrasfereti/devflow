@@ -43,6 +43,11 @@ export const EMPTY_TAGS = {
   },
 };
 
+export const EMPTY_POPULAR_TAGS = {
+  title: "No tags found",
+  message: "No tags have been created yet.",
+};
+
 export const EMPTY_COLLECTIONS = {
   title: "Collections Are Empty",
   message:

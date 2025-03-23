@@ -5,22 +5,22 @@ import React from "react";
 import TagCard from "@/components/cards/TagCard";
 import ROUTES from "@/constants/routes";
 import { getPopularQuestions } from "@/lib/actions/question.action";
-import { EMPTY_POPULAR_QUESTIONS } from "@/constants/ui-states";
+import {
+  EMPTY_POPULAR_QUESTIONS,
+  EMPTY_POPULAR_TAGS,
+} from "@/constants/ui-states";
 import DataRenderer from "@/components/DataRenderer";
 import { getPopularTags } from "@/lib/actions/tag.action";
 
 const RightSidebar = async () => {
-  const {
-    success: questionsSuccess,
-    data: popularQuestions,
-    error: questionsError,
-  } = await getPopularQuestions();
-
-  const {
-    success: tagsSuccess,
-    data: popularTags,
-    error: tagsError,
-  } = await getPopularTags();
+  const [
+    {
+      success: questionsSuccess,
+      data: popularQuestions,
+      error: questionsError,
+    },
+    { success: tagsSuccess, data: popularTags, error: tagsError },
+  ] = await Promise.all([getPopularQuestions(), getPopularTags()]);
 
   return (
     <section className="custom-scrollbar background-light900_dark200 light-border sticky right-0 top-0 flex h-screen w-[350px] flex-col gap-6 overflow-y-auto border-l p-6 pt-36 shadow-light-300 dark:shadow-none max-xl:hidden">
@@ -63,10 +63,7 @@ const RightSidebar = async () => {
 
         <DataRenderer
           data={popularTags}
-          empty={{
-            title: "No tags found",
-            message: "No tags have been created yet.",
-          }}
+          empty={EMPTY_POPULAR_TAGS}
           success={tagsSuccess}
           error={tagsError}
           render={(popularTags) => (
