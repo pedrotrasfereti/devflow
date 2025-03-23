@@ -4,10 +4,15 @@ import {
   ActionResponse,
   ErrorResponse,
   PaginatedSearchParams,
+  Question,
   User,
   UserDetails,
 } from "@/types/global";
-import { GetUserSchema, PaginatedSearchParamsSchema } from "../validations";
+import {
+  GetUserQuestionsSchema,
+  GetUserSchema,
+  PaginatedSearchParamsSchema,
+} from "../validations";
 import action from "../handlers/action";
 import handleError from "../handlers/error";
 import { FilterQuery } from "mongoose";
@@ -16,7 +21,7 @@ import {
   Question as QuestionModel,
   User as UserModel,
 } from "@/database";
-import { GetUserParams } from "@/types/action";
+import { GetUserParams, GetUserQuestionsParams } from "@/types/action";
 
 export async function getUsers(
   params: PaginatedSearchParams
@@ -116,5 +121,51 @@ export async function getUserDetails(
     return { success: true, data };
   } catch (error) {
     return handleError(validatedRequest) as ErrorResponse;
+  }
+}
+
+export async function getUserQuestions(
+  params: GetUserQuestionsParams
+): Promise<ActionResponse<{ questions: Question[]; isNext: boolean }>> {
+  const validatedRequest = await action({
+    params,
+    schema: GetUserQuestionsSchema,
+  });
+
+  if (validatedRequest instanceof Error) {
+    return handleError(validatedRequest) as ErrorResponse;
+  }
+
+  const { userId, page = 1, itemsPerPage = 10 } = params;
+
+  const skipValue = (Number(page) - 1) * Number(itemsPerPage);
+
+  const limitValue = Number(itemsPerPage);
+
+  try {
+    const totalQuestions = await QuestionModel.countDocuments({
+      author: userId,
+    });
+
+    const questions = await QuestionModel.find({ author: userId })
+      .populate("tags", "name")
+      .populate("author", "name image")
+      .sort({ createdAt: -1 })
+      .skip(skipValue)
+      .limit(limitValue);
+
+    const isNext = totalQuestions > skipValue + questions.length;
+
+    const data = {
+      questions: JSON.parse(JSON.stringify(questions)),
+      isNext,
+    };
+
+    return {
+      success: true,
+      data,
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
   }
 }
