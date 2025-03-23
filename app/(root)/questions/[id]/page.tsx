@@ -63,6 +63,7 @@ const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
               className="size-[22px]"
               fallbackClassName="text-[10px]"
             />
+
             <Link href={ROUTES.PROFILE(author._id)}>
               <p className="paragraph-semibold text-dark300_light700">
                 {author.name}
@@ -136,6 +137,8 @@ const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
 
       <section className="my-5">
         <Answers
+          page={Number(page) || 1}
+          isNext={answersResult?.isNext || false}
           data={answersResult?.answers}
           success={areAnswersLoaded}
           error={answersError}

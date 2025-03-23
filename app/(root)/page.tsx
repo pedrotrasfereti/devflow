@@ -11,6 +11,7 @@ import { getQuestions } from "@/lib/actions/question.action";
 import { RouteParams } from "@/types/global";
 import CommonFilter from "@/components/filters/CommonFilter";
 import { HomePageFilters } from "@/constants/filters";
+import Pagination from "@/components/Pagination";
 
 const Home = async ({ params }: RouteParams) => {
   // Example: url.com/?page=1&itemsPerPage=10&query=hello&filter=react
@@ -23,7 +24,7 @@ const Home = async ({ params }: RouteParams) => {
     filter: filter || "",
   });
 
-  const { questions } = data || {};
+  const { questions, isNext } = data || {};
 
   return (
     <>
@@ -68,6 +69,8 @@ const Home = async ({ params }: RouteParams) => {
           </div>
         )}
       />
+
+      <Pagination page={page} isNext={isNext || false} />
     </>
   );
 };
