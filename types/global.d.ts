@@ -87,3 +87,9 @@ interface UserDetails {
   totalQuestions: number;
   totalAnswers: number;
 }
+
+interface BadgeCounts {
+  GOLD: number;
+  SILVER: number;
+  BRONZE: number;
+}
