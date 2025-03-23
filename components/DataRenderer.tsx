@@ -1,5 +1,3 @@
-import React from "react";
-
 import { DEFAULT_EMPTY, DEFAULT_ERROR } from "@/constants/ui-states";
 
 import StateDisplay from "./StateDisplay";

@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-import React from "react";
 
 import { Button } from "../ui/button";
 

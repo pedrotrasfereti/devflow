@@ -8,7 +8,6 @@ import ROUTES from "@/constants/routes";
 import { EMPTY_QUESTION } from "@/constants/ui-states";
 import { getSavedQuestions } from "@/lib/actions/collection.action";
 import { RouteParams } from "@/types/global";
-import React from "react";
 
 const Collection = async ({ params }: RouteParams) => {
   const { page, itemsPerPage, query, filter } = await params;

@@ -15,10 +15,13 @@ This web application allows users to:
 - Personalize the interface with light/dark mode.
 
 <!-- DEMO -->
+
 ## Live Demo
+
 You can check out the deployed app [here](#).
 
 <!-- CONTACT -->
+
 ## Contact
 
 Pedro Trasfereti - [LinkedIn](https://www.linkedin.com/in/pedro-trasfereti/) - pedrotrasfereti@gmail.com

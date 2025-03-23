@@ -1,7 +1,6 @@
 import { LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 import { auth, signOut } from "@/auth";
 import ROUTES from "@/constants/routes";

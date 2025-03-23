@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 import { auth } from "@/auth";
 import UserAvatar from "@/components/UserAvatar";

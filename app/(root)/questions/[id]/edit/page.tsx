@@ -1,5 +1,4 @@
 import { notFound, redirect } from "next/navigation";
-import React from "react";
 
 import { auth } from "@/auth";
 import QuestionForm from "@/components/forms/QuestionForm";
