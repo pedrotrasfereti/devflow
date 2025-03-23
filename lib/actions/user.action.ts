@@ -2,6 +2,7 @@
 
 import {
   ActionResponse,
+  Answer,
   ErrorResponse,
   PaginatedSearchParams,
   Question,
@@ -21,7 +22,11 @@ import {
   Question as QuestionModel,
   User as UserModel,
 } from "@/database";
-import { GetUserParams, GetUserQuestionsParams } from "@/types/action";
+import {
+  GetUserAnswersParams,
+  GetUserParams,
+  GetUserQuestionsParams,
+} from "@/types/action";
 
 export async function getUsers(
   params: PaginatedSearchParams
@@ -139,7 +144,6 @@ export async function getUserQuestions(
   const { userId, page = 1, itemsPerPage = 10 } = params;
 
   const skipValue = (Number(page) - 1) * Number(itemsPerPage);
-
   const limitValue = Number(itemsPerPage);
 
   try {
@@ -161,10 +165,48 @@ export async function getUserQuestions(
       isNext,
     };
 
-    return {
-      success: true,
-      data,
+    return { success: true, data };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+export async function getUserAnswers(params: GetUserAnswersParams): Promise<
+  ActionResponse<{
+    answers: Answer[];
+    isNext: boolean;
+  }>
+> {
+  const validatedRequest = await action({
+    params,
+    schema: GetUserSchema,
+  });
+
+  if (validatedRequest instanceof Error) {
+    return handleError(validatedRequest) as ErrorResponse;
+  }
+
+  const { userId, page = 1, itemsPerPage = 10 } = params;
+
+  const skipValue = (Number(page) - 1) * Number(itemsPerPage);
+  const limitValue = Number(itemsPerPage);
+
+  try {
+    const totalAnswers = await AnswerModel.countDocuments({ author: userId });
+
+    const answers = await AnswerModel.find({ author: userId })
+      .populate("author", "_id name image")
+      .skip(skipValue)
+      .limit(limitValue);
+
+    const isNext = totalAnswers > skipValue + answers.length;
+
+    const data = {
+      answers: JSON.parse(JSON.stringify(answers)),
+      isNext,
     };
+
+    return { success: true, data };
   } catch (error) {
     return handleError(error) as ErrorResponse;
   }
