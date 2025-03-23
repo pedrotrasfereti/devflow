@@ -29,6 +29,11 @@ export const EMPTY_QUESTION = {
   },
 };
 
+export const EMPTY_POPULAR_QUESTIONS = {
+  title: "Ahh, No Questions Yet!",
+  message: "No questions have been asked yet.",
+};
+
 export const EMPTY_TAGS = {
   title: "No Tags Found",
   message: "The tag cloud is empty. Add some keywords to make it rain.",
