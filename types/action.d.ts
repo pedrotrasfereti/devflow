@@ -74,3 +74,7 @@ interface CollectionResponse {
   collection: Collection[];
   isNext: boolean;
 }
+
+interface GetUserParams {
+  userId: string;
+}

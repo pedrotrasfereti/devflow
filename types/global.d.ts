@@ -80,3 +80,9 @@ interface User {
   portfolio?: string;
   reputation?: number;
 }
+
+interface UserDetails {
+  user: User;
+  totalQuestions: number;
+  totalAnswers: number;
+}
