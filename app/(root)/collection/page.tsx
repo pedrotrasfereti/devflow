@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import QuestionCard from "@/components/cards/QuestionCard";
 import DataRenderer from "@/components/DataRenderer";
 import CommonFilter from "@/components/filters/CommonFilter";
@@ -8,9 +9,32 @@ import ROUTES from "@/constants/routes";
 import { EMPTY_QUESTION } from "@/constants/ui-states";
 import { getSavedQuestions } from "@/lib/actions/collection.action";
 import { RouteParams } from "@/types/global";
+import Link from "next/link";
 
 const Collection = async ({ params }: RouteParams) => {
   const { page, itemsPerPage, query, filter } = await params;
+
+  const loggedInUser = await auth();
+
+  if (!loggedInUser) {
+    return (
+      <>
+        <h1 className="h1-bold text-dark100_light900">Saved Questions</h1>
+
+        <div className="mt-11 flex w-full">
+          <p className="body-regular text-dark500_light700 max-w-md text-center">
+            You must be logged in to see your saved questions.{" "}
+            <Link
+              className="body-regular primary-text-gradient"
+              href={ROUTES.SIGN_IN}
+            >
+              Log in
+            </Link>
+          </p>
+        </div>
+      </>
+    );
+  }
 
   const { success, data, error } = await getSavedQuestions({
     page: Number(page) || 1,
