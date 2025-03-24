@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MDXEditorMethods } from "@mdxeditor/editor";
+import { type MDXEditorMethods } from "@mdxeditor/editor";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -23,9 +23,8 @@ import { createAnswer } from "@/lib/actions/answer.action";
 import { api } from "@/lib/api";
 import { AnswerSchema } from "@/lib/validations";
 
-const Editor = dynamic(() => import("@/components/editor"), {
-  ssr: false,
-});
+// Dynamically render component on client side
+const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
 
 interface Props {
   questionId: string;
@@ -34,10 +33,9 @@ interface Props {
 }
 
 const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
-  const session = useSession();
-
   const [isAnswering, startAnsweringTransition] = useTransition();
   const [isAISubmitting, setIsAISubmitting] = useState(false);
+  const session = useSession();
 
   const editorRef = useRef<MDXEditorMethods>(null);
 
@@ -62,6 +60,10 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
           title: "Success",
           description: "Your answer has been posted successfully",
         });
+
+        if (editorRef.current) {
+          editorRef.current.setMarkdown("");
+        }
       } else {
         toast({
           title: "Error",
@@ -161,8 +163,8 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
 
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(handleSubmit)}
           className="mt-6 flex w-full flex-col gap-10"
+          onSubmit={form.handleSubmit(handleSubmit)}
         >
           <FormField
             control={form.control}
