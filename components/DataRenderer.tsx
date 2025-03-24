@@ -17,6 +17,7 @@ interface Props<T> {
       href: string;
     };
   };
+  variant?: string;
   render: (data: T[]) => React.ReactNode;
 }
 
@@ -25,6 +26,7 @@ const DataRenderer = <T,>({
   error,
   data,
   empty = DEFAULT_EMPTY,
+  variant,
   render,
 }: Props<T>) => {
   // Error State
@@ -35,6 +37,8 @@ const DataRenderer = <T,>({
           light: "/images/light-error.png",
           dark: "/images/dark-error.png",
           alt: "Error illustration",
+          width: variant === "sm" ? 240 : undefined,
+          height: variant === "sm" ? 170 : undefined,
         }}
         title={error?.message || DEFAULT_ERROR.title}
         message={
@@ -55,6 +59,8 @@ const DataRenderer = <T,>({
           light: "/images/light-illustration.png",
           dark: "/images/dark-illustration.png",
           alt: "Empty state illustration",
+          width: variant === "sm" ? 240 : undefined,
+          height: variant === "sm" ? 170 : undefined,
         }}
         title={empty.title}
         message={empty.message}

@@ -3,11 +3,13 @@ import Link from "next/link";
 
 import { Button } from "./ui/button";
 
-interface StateDisplayProps {
+interface Props {
   image: {
     light: string;
     dark: string;
     alt: string;
+    width?: number;
+    height?: number;
   };
   title: string;
   message: string;
@@ -17,23 +19,23 @@ interface StateDisplayProps {
   };
 }
 
-const StateDisplay = ({ image, title, message, button }: StateDisplayProps) => {
+const StateDisplay = ({ image, title, message, button }: Props) => {
   return (
-    <div className="mt-16 flex w-full flex-col items-center justify-center sm:mt-36">
+    <div className="mt-16 flex w-full flex-col items-center justify-center">
       <>
         <Image
           src={image.dark}
           alt={image.alt}
-          width={270}
-          height={200}
+          width={image.width || 270}
+          height={image.height || 200}
           className="hidden object-contain dark:block"
         />
 
         <Image
           src={image.light}
           alt={image.alt}
-          width={270}
-          height={200}
+          width={image.width || 270}
+          height={image.height || 200}
           className="block object-contain dark:hidden"
         />
 

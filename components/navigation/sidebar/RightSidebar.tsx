@@ -31,6 +31,7 @@ const RightSidebar = async () => {
           error={questionsError}
           data={popularQuestions}
           empty={EMPTY_POPULAR_QUESTIONS}
+          variant="sm"
           render={(popularQuestions) => (
             <div className="mt-7 flex w-ful flex-col gap-[30px]">
               {popularQuestions.map(({ _id, title }) => (
@@ -65,6 +66,7 @@ const RightSidebar = async () => {
           empty={EMPTY_POPULAR_TAGS}
           success={tagsSuccess}
           error={tagsError}
+          variant="sm"
           render={(popularTags) => (
             <div className="mt-7 flex flex-col gap-4">
               {popularTags.map(({ _id, name, questions }) => (
