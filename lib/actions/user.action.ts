@@ -6,6 +6,7 @@ import {
   ErrorResponse,
   PaginatedSearchParams,
   Question,
+  Tag,
   User,
   UserDetails,
 } from "@/types/global";
@@ -17,7 +18,7 @@ import {
 } from "../validations";
 import action from "../handlers/action";
 import handleError from "../handlers/error";
-import { FilterQuery } from "mongoose";
+import { FilterQuery, PipelineStage, Types } from "mongoose";
 import {
   Answer as AnswerModel,
   Question as QuestionModel,
@@ -208,6 +209,49 @@ export async function getUserAnswers(params: GetUserAnswersParams): Promise<
     };
 
     return { success: true, data };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+export async function getUserTopTags(
+  params: GetUserParams
+): Promise<ActionResponse<Tag[]>> {
+  const validatedRequest = await action({
+    params,
+    schema: GetUserSchema,
+  });
+
+  if (validatedRequest instanceof Error) {
+    return handleError(validatedRequest) as ErrorResponse;
+  }
+
+  const { userId } = params;
+
+  try {
+    const pipeline: PipelineStage[] = [
+      { $match: { author: new Types.ObjectId(userId) } },
+      { $unwind: "$tags" },
+      { $group: { _id: "$tags", questions: { $sum: 1 } } },
+      {
+        $lookup: {
+          from: "tags",
+          localField: "_id",
+          foreignField: "_id",
+          as: "tagInfo",
+        },
+      },
+      { $unwind: "$tagInfo" },
+      { $sort: { questions: -1 } },
+      { $limit: 10 },
+      {
+        $project: { _id: "$tagInfo._id", name: "$tagInfo.name", questions: 1 },
+      },
+    ];
+
+    const tags = await QuestionModel.aggregate(pipeline);
+
+    return { success: true, data: JSON.parse(JSON.stringify(tags)) };
   } catch (error) {
     return handleError(error) as ErrorResponse;
   }
