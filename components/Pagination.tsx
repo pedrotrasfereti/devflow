@@ -1,11 +1,12 @@
 "use client";
 
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
+import { useRouter, useSearchParams } from "next/navigation";
+
+import { formUrlQuery } from "@/lib/url";
 import { cn } from "@/lib/utils";
 
 import { Button } from "./ui/button";
-import { formUrlQuery } from "@/lib/url";
-import { useRouter, useSearchParams } from "next/navigation";
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 
 interface Props {
   page: number | undefined | string;
@@ -50,7 +51,7 @@ const Pagination = ({ page = 1, isNext, containerClasses }: Props) => {
       )}
 
       <div className="flex items-center justify-center rounded-md bg-primary-500 px-3.5 py-2">
-        <p className="body-semibold text-light900">{page}</p>
+        <p className="body-semibold text-light-900">{page}</p>
       </div>
 
       {/* Next Page Button */}

@@ -6,12 +6,13 @@ import { revalidatePath } from "next/cache";
 import ROUTES from "@/constants/routes";
 import { Question } from "@/database";
 import AnswerModel, { IAnswerDoc } from "@/database/answer.model";
+import { CreateAnswerParams, GetAnswersParams } from "@/types/action";
+import { ActionResponse, Answer, ErrorResponse } from "@/types/global";
 
 import action from "../handlers/action";
 import handleError from "../handlers/error";
 import { GetAnswersSchema, PostAnswerSchema } from "../validations";
-import { ActionResponse, Answer, ErrorResponse } from "@/types/global";
-import { CreateAnswerParams, GetAnswersParams } from "@/types/action";
+
 
 export async function createAnswer(
   params: CreateAnswerParams

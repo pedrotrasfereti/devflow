@@ -1,31 +1,30 @@
+import dayjs from "dayjs";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
 import { auth } from "@/auth";
+import AnswerCard from "@/components/cards/AnswerCard";
+import QuestionCard from "@/components/cards/QuestionCard";
+import TagCard from "@/components/cards/TagCard";
+import DataRenderer from "@/components/DataRenderer";
+import Pagination from "@/components/Pagination";
+import ProfileLink from "@/components/profile/ProfileLink";
+import ProfileStats from "@/components/profile/ProfileStats";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UserAvatar from "@/components/UserAvatar";
+import {
+  EMPTY_ANSWERS,
+  EMPTY_QUESTION,
+  EMPTY_TAGS,
+} from "@/constants/ui-states";
 import {
   getUserDetails,
   getUserQuestions,
   getUserAnswers,
   getUserTopTags,
 } from "@/lib/actions/user.action";
-
 import { RouteParams } from "@/types/global";
-import { notFound } from "next/navigation";
-
-import dayjs from "dayjs";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import ProfileLink from "@/components/profile/ProfileLink";
-import ProfileStats from "@/components/profile/ProfileStats";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Pagination from "@/components/Pagination";
-import QuestionCard from "@/components/cards/QuestionCard";
-import DataRenderer from "@/components/DataRenderer";
-import {
-  EMPTY_ANSWERS,
-  EMPTY_QUESTION,
-  EMPTY_TAGS,
-} from "@/constants/ui-states";
-import AnswerCard from "@/components/cards/AnswerCard";
-import TagCard from "@/components/cards/TagCard";
 
 const Profile = async ({ params, searchParams }: RouteParams) => {
   // /123123
@@ -81,7 +80,7 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
 
   return (
     <>
-      <section className="flex flex-col-reverse items-start justify-between sm:flex-row mb-4">
+      <section className="mb-4 flex flex-col-reverse items-start justify-between sm:flex-row">
         <div className="flex flex-col items-start gap-4 lg:flex-row">
           <UserAvatar
             id={user._id}

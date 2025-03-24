@@ -1,24 +1,7 @@
 "use server";
 
-import {
-  ActionResponse,
-  Answer,
-  ErrorResponse,
-  PaginatedSearchParams,
-  Question,
-  Tag,
-  User,
-  UserDetails,
-} from "@/types/global";
-import {
-  GetUserAnswersSchema,
-  GetUserQuestionsSchema,
-  GetUserSchema,
-  PaginatedSearchParamsSchema,
-} from "../validations";
-import action from "../handlers/action";
-import handleError from "../handlers/error";
 import { FilterQuery, PipelineStage, Types } from "mongoose";
+
 import {
   Answer as AnswerModel,
   Question as QuestionModel,
@@ -29,6 +12,25 @@ import {
   GetUserParams,
   GetUserQuestionsParams,
 } from "@/types/action";
+import {
+  ActionResponse,
+  Answer,
+  ErrorResponse,
+  PaginatedSearchParams,
+  Question,
+  Tag,
+  User,
+  UserDetails,
+} from "@/types/global";
+
+import action from "../handlers/action";
+import handleError from "../handlers/error";
+import {
+  GetUserAnswersSchema,
+  GetUserQuestionsSchema,
+  GetUserSchema,
+  PaginatedSearchParamsSchema,
+} from "../validations";
 
 export async function getUsers(
   params: PaginatedSearchParams
@@ -130,7 +132,7 @@ export async function getUserDetails(
       },
     };
   } catch (error) {
-    return handleError(validatedRequest) as ErrorResponse;
+    return handleError(error) as ErrorResponse;
   }
 }
 

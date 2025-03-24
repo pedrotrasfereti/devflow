@@ -1,7 +1,9 @@
-import { User } from "@/types/global";
-import UserAvatar from "../UserAvatar";
 import Link from "next/link";
+
 import ROUTES from "@/constants/routes";
+import { User } from "@/types/global";
+
+import UserAvatar from "../UserAvatar";
 
 const UserCard = ({ _id, name, image, username }: User) => {
   return (

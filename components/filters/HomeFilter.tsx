@@ -3,10 +3,11 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-import { Button } from "../ui/button";
 
 import { formUrlQuery, removeKeysFromUrlQuery } from "@/lib/url";
 import { cn } from "@/lib/utils";
+
+import { Button } from "../ui/button";
 
 const filters = [
   { name: "React", value: "react" },

@@ -5,6 +5,7 @@ import { MDXEditorMethods } from "@mdxeditor/editor";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import { useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,11 +18,10 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { AnswerSchema } from "@/lib/validations";
 import { toast } from "@/hooks/use-toast";
 import { createAnswer } from "@/lib/actions/answer.action";
-import { useSession } from "next-auth/react";
 import { api } from "@/lib/api";
+import { AnswerSchema } from "@/lib/validations";
 
 const Editor = dynamic(() => import("@/components/editor"), {
   ssr: false,

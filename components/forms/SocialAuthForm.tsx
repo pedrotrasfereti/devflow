@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 
-import { Button } from "../ui/button";
 
 import ROUTES from "@/constants/routes";
 import { toast } from "@/hooks/use-toast";
+
+import { Button } from "../ui/button";
 
 const SocialAuthForm = () => {
   const btnClass =

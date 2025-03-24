@@ -1,13 +1,14 @@
 "use client";
 
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+import React, { use, useState } from "react";
+
 import { toast } from "@/hooks/use-toast";
 import { createVote } from "@/lib/actions/vote.action";
 import { formatCompactNumber } from "@/lib/utils";
 import { HasVotedResponse } from "@/types/action";
 import { ActionResponse } from "@/types/global";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import React, { use, useState } from "react";
 
 interface Props {
   targetId: string;
@@ -63,7 +64,7 @@ const Votes = ({
     } catch (error) {
       return toast({
         title: "Failed to vote",
-        description: "An error occurred while voting. Please try again later.",
+        description: `An error occurred while voting. Please try again later. ${error}`,
         variant: "destructive",
       });
     } finally {

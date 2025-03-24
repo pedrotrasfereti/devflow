@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { auth } from "@/auth";
 import QuestionCard from "@/components/cards/QuestionCard";
 import DataRenderer from "@/components/DataRenderer";
@@ -9,7 +11,6 @@ import ROUTES from "@/constants/routes";
 import { EMPTY_QUESTION } from "@/constants/ui-states";
 import { getSavedQuestions } from "@/lib/actions/collection.action";
 import { RouteParams } from "@/types/global";
-import Link from "next/link";
 
 const Collection = async ({ params }: RouteParams) => {
   const { page, itemsPerPage, query, filter } = await params;

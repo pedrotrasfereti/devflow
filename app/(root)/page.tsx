@@ -2,16 +2,16 @@ import Link from "next/link";
 
 import QuestionCard from "@/components/cards/QuestionCard";
 import DataRenderer from "@/components/DataRenderer";
+import CommonFilter from "@/components/filters/CommonFilter";
 import HomeFilter from "@/components/filters/HomeFilter";
+import Pagination from "@/components/Pagination";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
+import { HomePageFilters } from "@/constants/filters";
 import ROUTES from "@/constants/routes";
 import { EMPTY_QUESTION } from "@/constants/ui-states";
 import { getQuestions } from "@/lib/actions/question.action";
 import { RouteParams } from "@/types/global";
-import CommonFilter from "@/components/filters/CommonFilter";
-import { HomePageFilters } from "@/constants/filters";
-import Pagination from "@/components/Pagination";
 
 const Home = async ({ params }: RouteParams) => {
   // Example: url.com/?page=1&itemsPerPage=10&query=hello&filter=react

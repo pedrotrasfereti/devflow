@@ -2,13 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 import TagCard from "@/components/cards/TagCard";
+import DataRenderer from "@/components/DataRenderer";
 import ROUTES from "@/constants/routes";
-import { getPopularQuestions } from "@/lib/actions/question.action";
 import {
   EMPTY_POPULAR_QUESTIONS,
   EMPTY_POPULAR_TAGS,
 } from "@/constants/ui-states";
-import DataRenderer from "@/components/DataRenderer";
+import { getPopularQuestions } from "@/lib/actions/question.action";
 import { getPopularTags } from "@/lib/actions/tag.action";
 
 const RightSidebar = async () => {
@@ -33,7 +33,7 @@ const RightSidebar = async () => {
           empty={EMPTY_POPULAR_QUESTIONS}
           variant="sm"
           render={(popularQuestions) => (
-            <div className="mt-7 flex w-ful flex-col gap-[30px]">
+            <div className="mt-7 flex w-full flex-col gap-[30px]">
               {popularQuestions.map(({ _id, title }) => (
                 <Link
                   key={_id}

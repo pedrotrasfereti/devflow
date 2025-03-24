@@ -1,12 +1,14 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { SelectContent, SelectGroup } from "@radix-ui/react-select";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { SelectContent, SelectGroup } from "@radix-ui/react-select";
+import { formUrlQuery } from "@/lib/url";
+import { cn } from "@/lib/utils";
+
 
 import { Select, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { formUrlQuery } from "@/lib/url";
+
 
 interface Filter {
   name: string;

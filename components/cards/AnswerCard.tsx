@@ -1,15 +1,14 @@
 import Link from "next/link";
 
 import ROUTES from "@/constants/routes";
-
+import { hasVoted } from "@/lib/actions/vote.action";
 import { cn, getTimeStamp } from "@/lib/utils";
+import { Answer } from "@/types/global";
 
 import { Preview } from "../editor/Preview";
-
 import UserAvatar from "../UserAvatar";
-import { Answer } from "@/types/global";
 import Votes from "../votes/Votes";
-import { hasVoted } from "@/lib/actions/vote.action";
+
 
 interface Props extends Answer {
   containerClasses?: string;

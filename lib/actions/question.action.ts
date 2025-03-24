@@ -6,6 +6,12 @@ import QuestionModel, { IQuestionDoc } from "@/database/question.model";
 import TagQuestion from "@/database/tag-question.model";
 import Tag, { ITagDoc } from "@/database/tag.model";
 import {
+  createQuestionParams,
+  editQuestionParams,
+  getQuestionParams,
+  IncrementViewsParams,
+} from "@/types/action";
+import {
   ActionResponse,
   ErrorResponse,
   PaginatedSearchParams,
@@ -14,6 +20,7 @@ import {
 
 import action from "../handlers/action";
 import handleError from "../handlers/error";
+import dbConnect from "../mongoose";
 import {
   AskQuestionSchema,
   EditQuestionSchema,
@@ -21,13 +28,6 @@ import {
   IncrementViewsSchema,
   PaginatedSearchParamsSchema,
 } from "../validations";
-import {
-  createQuestionParams,
-  editQuestionParams,
-  getQuestionParams,
-  IncrementViewsParams,
-} from "@/types/action";
-import dbConnect from "../mongoose";
 
 export async function createQuestion(
   params: createQuestionParams
