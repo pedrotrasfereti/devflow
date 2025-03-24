@@ -10,7 +10,7 @@ export interface ITagQuestionDoc
     Document<Types.ObjectId> {}
 
 const TagQuestionSchema = new Schema({
-  tagId: { type: Schema.Types.ObjectId, ref: "Tag", required: true },
+  tag: { type: Schema.Types.ObjectId, ref: "Tag", required: true },
   question: { type: Schema.Types.ObjectId, ref: "Question", required: true },
 });
 
