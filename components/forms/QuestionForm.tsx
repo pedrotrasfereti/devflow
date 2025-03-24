@@ -109,7 +109,7 @@ const QuestionForm = ({ question, isEdit = false }: QuestionFormParams) => {
         });
 
         if (result.data) {
-          router.push(ROUTES.QUESTION(result.data._id));
+          router.push(ROUTES.QUESTION(result.data._id.toString()));
         }
       } else {
         toast({
