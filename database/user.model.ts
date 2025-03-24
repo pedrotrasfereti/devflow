@@ -1,4 +1,4 @@
-import { Document, model, models, Schema } from "mongoose";
+import { Document, model, models, Schema, Types } from "mongoose";
 
 export interface IUser {
   name: string;
@@ -11,7 +11,7 @@ export interface IUser {
   reputation?: number;
 }
 
-export interface IUserDoc extends IUser, Document {}
+export interface IUserDoc extends IUser, Document<Types.ObjectId> {}
 
 const UserSchema = new Schema(
   {

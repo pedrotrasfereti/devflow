@@ -1,13 +1,13 @@
-import { Document, model, models, Schema } from "mongoose";
+import { Document, model, models, Schema, Types } from "mongoose";
 
 export interface IVote {
-  author: Schema.Types.ObjectId;
-  targetId: Schema.Types.ObjectId;
+  author: Types.ObjectId;
+  targetId: Types.ObjectId;
   targetType: "Question" | "Answer";
   voteType: "upvote" | "downvote";
 }
 
-export interface IVoteDoc extends IVote, Document {}
+export interface IVoteDoc extends IVote, Document<Types.ObjectId> {}
 
 const VoteSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },

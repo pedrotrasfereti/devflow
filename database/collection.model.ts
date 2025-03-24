@@ -1,11 +1,11 @@
-import { Document, model, models, Schema } from "mongoose";
+import { Document, model, models, Schema, Types } from "mongoose";
 
 export interface ICollection {
-  author: Schema.Types.ObjectId;
-  question: Schema.Types.ObjectId;
+  author: Types.ObjectId;
+  question: Types.ObjectId;
 }
 
-export interface ICollectionDoc extends ICollection, Document {}
+export interface ICollectionDoc extends ICollection, Document<Types.ObjectId> {}
 
 const CollectionSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
