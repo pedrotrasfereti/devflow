@@ -106,26 +106,29 @@ export async function getUserDetails(
 
   const { userId } = params;
 
-  const user = UserModel.findById(userId);
-
-  if (!user) {
-    throw new Error(`User with ID ${userId} not found`);
-  }
-
-  const totalQuestions = await QuestionModel.countDocuments({ author: userId });
-
-  const totalAnswers = await AnswerModel.countDocuments({
-    author: userId,
-  });
-
-  const data = {
-    user: JSON.parse(JSON.stringify(user)),
-    totalQuestions,
-    totalAnswers,
-  };
-
   try {
-    return { success: true, data };
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      throw new Error(`User with ID ${userId} not found`);
+    }
+
+    const totalQuestions = await QuestionModel.countDocuments({
+      author: userId,
+    });
+
+    const totalAnswers = await AnswerModel.countDocuments({
+      author: userId,
+    });
+
+    return {
+      success: true,
+      data: {
+        user: JSON.parse(JSON.stringify(user)),
+        totalQuestions,
+        totalAnswers,
+      },
+    };
   } catch (error) {
     return handleError(validatedRequest) as ErrorResponse;
   }
