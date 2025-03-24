@@ -10,6 +10,7 @@ import {
   UserDetails,
 } from "@/types/global";
 import {
+  GetUserAnswersSchema,
   GetUserQuestionsSchema,
   GetUserSchema,
   PaginatedSearchParamsSchema,
@@ -179,7 +180,7 @@ export async function getUserAnswers(params: GetUserAnswersParams): Promise<
 > {
   const validatedRequest = await action({
     params,
-    schema: GetUserSchema,
+    schema: GetUserAnswersSchema,
   });
 
   if (validatedRequest instanceof Error) {
