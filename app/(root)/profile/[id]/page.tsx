@@ -29,7 +29,7 @@ import TagCard from "@/components/cards/TagCard";
 
 const Profile = async ({ params, searchParams }: RouteParams) => {
   // /123123
-  const { userId } = await params;
+  const { id: userId } = await params;
 
   // ?id=1&page=1&itemsPerPage=10
   const { page, itemsPerPage } = await searchParams;
@@ -81,7 +81,7 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
 
   return (
     <>
-      <section className="flex flex-col-reverse items-start justify-between sm:flex-row">
+      <section className="flex flex-col-reverse items-start justify-between sm:flex-row mb-4">
         <div className="flex flex-col items-start gap-4 lg:flex-row">
           <UserAvatar
             id={user._id}
@@ -90,43 +90,43 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
             className="size-[140px] rounded-full object-cover"
             fallbackClassName="text-5xl font-bolder"
           />
-        </div>
 
-        <div className="mt-3">
-          <h2 className="h2-bold text-dark100_light900">{user.name}</h2>
+          <div className="mt-3">
+            <h2 className="h2-bold text-dark100_light900">{user.name}</h2>
 
-          <p className="paragraph-regular text-dark200_light800">
-            @{user.username}
-          </p>
-
-          <div className="mt-5 flex flex-wrap items-center justify-start gap-5">
-            {user.portfolio && (
-              <ProfileLink
-                imgUrl="/icons/link.svg"
-                href={user.portfolio}
-                title="Portfolio"
-              />
-            )}
-
-            {user.location && (
-              <ProfileLink
-                imgUrl="/icons/location.svg"
-                href={user.location}
-                title="Portfolio"
-              />
-            )}
-
-            <ProfileLink
-              imgUrl="/icons/calendar.svg"
-              title={dayjs(user.createdAt).format("MMMM YYYY")}
-            />
-          </div>
-
-          {user.bio && (
-            <p className="paragraph-regular text-dark400_light800 mt-8">
-              {user.bio}
+            <p className="paragraph-regular text-dark200_light800">
+              @{user.username}
             </p>
-          )}
+
+            <div className="mt-5 flex flex-wrap items-center justify-start gap-5">
+              {user.portfolio && (
+                <ProfileLink
+                  imgUrl="/icons/link.svg"
+                  href={user.portfolio}
+                  title="Portfolio"
+                />
+              )}
+
+              {user.location && (
+                <ProfileLink
+                  imgUrl="/icons/location.svg"
+                  href={user.location}
+                  title="Portfolio"
+                />
+              )}
+
+              <ProfileLink
+                imgUrl="/icons/calendar.svg"
+                title={dayjs(user.createdAt).format("MMMM YYYY")}
+              />
+            </div>
+
+            {user.bio && (
+              <p className="paragraph-regular text-dark400_light800 mt-8">
+                {user.bio}
+              </p>
+            )}
+          </div>
         </div>
 
         <div className="flex justify-end max-sm:mb-5 max-sm:w-full sm:mt-3">
