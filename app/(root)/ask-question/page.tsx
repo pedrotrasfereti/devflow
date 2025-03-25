@@ -1,8 +1,7 @@
-import { redirect } from "next/navigation";
+import Link from "next/link";
 
 import { auth } from "@/auth";
 import QuestionForm from "@/components/forms/QuestionForm";
-import Link from "next/link";
 import ROUTES from "@/constants/routes";
 
 const AskAQuestion = async () => {
