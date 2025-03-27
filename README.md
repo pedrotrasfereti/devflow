@@ -4,6 +4,8 @@
 
 This project was built along with the [Ultimate Next.js Course](https://www.jsmastery.pro/ultimate-next-course), covering modern Next.js features like SSG, ISR, SSR, PPR, Server Functions, Caching, and Revalidation. The application enables developers to ask questions, post answers, vote, explore recommendations, and engage with gamification elements like badges and rewards.
 
+![Demo](demo.gif)
+
 This web application allows users to:
 
 - Authenticate using NextAuth with multiple providers (Email/Password, Google, GitHub);
@@ -18,7 +20,7 @@ This web application allows users to:
 
 ## Live Demo
 
-You can check out the deployed app [here](#).
+Coming soon!
 
 <!-- CONTACT -->
 
