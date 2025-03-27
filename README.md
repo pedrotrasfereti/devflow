@@ -16,6 +16,53 @@ This web application allows users to:
 - Browse users, tags, and recommended topics;
 - Personalize the interface with light/dark mode.
 
+<!-- RUN APP -->
+
+## Run Application
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (version 18+ recommended)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
+
+### Setup
+
+1. **Clone the repository**
+
+   ```sh
+   git clone https://github.com/your-username/devflow.git
+   cd devflow
+   ```
+
+2. **Install dependencies**
+
+   ```sh
+   npm install
+   ```
+
+3. **Set up .env**
+
+   ```
+   AUTH_SECRET="your_auth_secret"
+   AUTH_GITHUB_ID="your_github_id"
+   AUTH_GITHUB_SECRET="your_github_secret"
+   AUTH_GOOGLE_ID="your_google_id"
+   AUTH_GOOGLE_SECRET="your_google_secret"
+   MONGODB_URI="your_mongodb_uri"
+   OPENAI_API_KEY="your_openai_api_key"
+   AUTH_URL="http://localhost:3000"
+   ```
+
+4. **Start the development server**
+
+   ```
+   npm run dev
+   ```
+
+   The application should now be running at http://localhost:3000/.
+
 <!-- DEMO -->
 
 ## Live Demo
